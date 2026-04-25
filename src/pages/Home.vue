@@ -8,19 +8,23 @@
 
         <div class="mt-6 relative w-[768px] max-w-[90%] h-[68px] mx-auto">
           <div class="absolute inset-0 bg-[rgba(255,255,255,0.002)] rounded-[12px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]" aria-hidden="true"></div>
-
           <div class="relative z-10 flex items-start gap-2 h-full bg-white rounded-[12px] p-2">
             <div class="w-[292.29px] h-[52px] bg-[#E9E9E9] border border-[#6B7FC6] rounded-[8px] flex items-center px-3">
               <span class="w-[20.5px] h-[20.5px] bg-[#727784] rounded-sm mr-3 flex-shrink-0"></span>
-              <input class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#6B7280]" placeholder="Where to next?" />
+              <input v-model="destinationQuery" class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#6B7280]" placeholder="Where to next?" />
             </div>
 
             <div class="w-[292.29px] h-[52px] bg-[#E9E9E9] border border-[#6B7FC6] rounded-[8px] flex items-center px-3">
               <span class="w-[18px] h-[20px] bg-[#727784] rounded-sm mr-3 flex-shrink-0"></span>
-              <input class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#191C22]" placeholder="Oct 12 - Oct 18" />
+              <input v-model="dateQuery" class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#191C22]" placeholder="Oct 12 - Oct 19, 2024" />
             </div>
 
-            <button class="w-[151.42px] h-[52px] bg-[#005CBD] rounded-[8px] text-white font-bold flex items-center justify-center">Search</button>
+            <button
+              class="w-[151.42px] h-[52px] bg-[#005CBD] rounded-[8px] text-white font-bold flex items-center justify-center"
+              @click="goToSearch()"
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
@@ -46,11 +50,20 @@
           <h2 class="text-[32px] leading-10 font-extrabold text-[#191C22]">Trending Destinations</h2>
           <p class="text-lg leading-7 text-[#4B5563]">Handpicked favorites for your next adventure</p>
         </div>
-        <a class="text-[#005CBD] text-lg font-bold leading-7">View all</a>
+        <button class="text-[#005CBD] text-lg font-bold leading-7" @click="goToSearch()">View all</button>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <article v-for="(d, idx) in destinationCards" :key="d.city" class="group">
+        <article
+          v-for="(d, idx) in destinationCards"
+          :key="d.city"
+          class="group cursor-pointer"
+          role="button"
+          tabindex="0"
+          @click="goToSearch(`${d.city}, ${d.country}`)"
+          @keydown.enter="goToSearch(`${d.city}, ${d.country}`)"
+          @keydown.space.prevent="goToSearch(`${d.city}, ${d.country}`)"
+        >
           <div class="relative h-[389px] rounded-[16px] overflow-hidden bg-gray-200">
             <div
               class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -71,15 +84,15 @@
     </section>
 
     <section class="relative mx-6 my-12 min-h-[424px] overflow-hidden rounded-[24px] bg-[#B61B4A] px-8 py-12 text-white md:h-[424px] md:px-[80px] md:py-[66px]">
-      <div class="absolute left-[515px] top-[-92px] hidden h-[520px] w-[330px] rotate-[-45deg] rounded-[38px] bg-black/15 md:block" aria-hidden="true">
-        <div class="absolute left-[72px] top-[114px] h-10 w-10 rounded-full bg-[#C61A52]"></div>
-        <div class="absolute bottom-[118px] left-[112px] h-[104px] w-[104px] rotate-45 bg-[#C61A52] before:absolute before:-top-[52px] before:left-0 before:h-[104px] before:w-[104px] before:rounded-full before:bg-[#C61A52] after:absolute after:left-[52px] after:top-0 after:h-[104px] after:w-[104px] after:rounded-full after:bg-[#C61A52]"></div>
+      <div class="absolute left-[555px] top-[-2px] hidden h-[342px] w-[246px] rotate-[-45deg] rounded-[30px] bg-black/15 md:block" aria-hidden="true">
+        <div class="absolute left-[52px] top-[42px] h-9 w-9 rounded-full bg-[#C61A52]"></div>
+        <div class="absolute bottom-[76px] left-[86px] h-[78px] w-[78px] rotate-45 bg-[#C61A52] before:absolute before:-top-[39px] before:left-0 before:h-[78px] before:w-[78px] before:rounded-full before:bg-[#C61A52] after:absolute after:left-[39px] after:top-0 after:h-[78px] after:w-[78px] after:rounded-full after:bg-[#C61A52]"></div>
       </div>
 
       <img
         :src="promoBanner"
         alt=""
-        class="absolute right-[42px] top-[56px] hidden h-[318px] w-[344px] rotate-[3deg] rounded-[18px] object-cover shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:block"
+        class="absolute right-[48px] top-[56px] hidden h-[318px] w-[344px] rotate-[3deg] rounded-[18px] object-cover shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:block"
       />
 
       <div class="relative z-10 max-w-[560px]">
@@ -89,9 +102,9 @@
         <p class="mt-6 max-w-[540px] text-[20px] leading-8 text-white/90">
           Exclusive member deals on flights and luxury hotels for your next summer getaway. Valid until Oct 31st.
         </p>
-        <div class="mt-10 grid grid-cols-1 items-center gap-8 sm:grid-cols-[184px_224px]">
+        <div class="mt-10 grid grid-cols-1 items-center gap-5 sm:grid-cols-[184px_224px]">
           <button class="h-[58px] rounded-[12px] bg-white px-8 text-xl font-bold text-[#B61B4A] whitespace-nowrap">Explore Deals</button>
-          <button class="h-[58px] bg-transparent px-0 text-left text-xl font-bold text-white whitespace-nowrap">Join Club T-Goda</button>
+          <button class="h-[58px] rounded-[12px] border-[3px] border-solid border-white bg-transparent px-8 text-xl font-bold text-white whitespace-nowrap">Join Club T-Goda</button>
         </div>
       </div>
     </section>
@@ -121,11 +134,25 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import store from '../store'
 import hero from '../assets/Image.png'
 import promoBanner from '../assets/img-promobanner.png'
 import firstIcon from '../assets/first icon.png'
 import secondIcon from '../assets/second icon.png'
 import thirdIcon from '../assets/third icon.png'
+
+const router = useRouter()
+const destinationQuery = ref(store.searchQuery)
+const dateQuery = ref(`${store.dateRange.from} - ${store.dateRange.to}`)
+
+function goToSearch(destination = destinationQuery.value) {
+  store.searchQuery = destination || 'Bali, Indonesia'
+  const [from = 'Oct 12', to = 'Oct 19, 2024'] = dateQuery.value.split(' - ')
+  store.dateRange = { from: from.trim(), to: to.trim() }
+  router.push({ name: 'SearchResults' })
+}
 
 const featureCards = [
   {
