@@ -369,11 +369,10 @@ button {
   margin-top: calc(var(--nav-height) + var(--space-7));
 }
 
-/* Replace url() value with your actual image */
 .hero__image {
   position: absolute;
   inset: 0;
-  background: url('/images/hero.jpg') center / cover no-repeat;
+  background: url('./homepage/Image.png') center / cover no-repeat;
   z-index: 0;
 }
 
@@ -621,11 +620,10 @@ button {
   overflow: hidden;
 }
 
-/* Replace url() with your actual image */
 .destination-card__image {
   position: absolute;
   inset: 0;
-  background: url('/images/destination.jpg') center / cover no-repeat;
+  background: url('./homepage/Thailand page 1.png') center / cover no-repeat;
   width: 100%;
   height: 100%;
   transition: transform 0.4s ease;
@@ -744,8 +742,7 @@ button {
   box-shadow: var(--shadow-card);
   transform: rotate(3deg);
   object-fit: cover;
-  /* Replace with your actual image */
-  background: url('/images/promo.jpg') center / cover no-repeat;
+  background: url('./homepage/img-promobanner.png') center / cover no-repeat;
 }
 
 

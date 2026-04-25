@@ -137,11 +137,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '../store'
-import hero from '../assets/Image.png'
-import promoBanner from '../assets/img-promobanner.png'
-import firstIcon from '../assets/first icon.png'
-import secondIcon from '../assets/second icon.png'
-import thirdIcon from '../assets/third icon.png'
+import hero from '../assets/homepage/Image.png'
+import promoBanner from '../assets/homepage/img-promobanner.png'
+import firstIcon from '../assets/homepage/first icon.png'
+import secondIcon from '../assets/homepage/second icon.png'
+import thirdIcon from '../assets/homepage/third icon.png'
 
 const router = useRouter()
 const destinationQuery = ref(store.searchQuery)
@@ -183,7 +183,7 @@ const destinationCards = [
 ]
 
 // Load all images from assets folder (Vite) and expose as URLs
-const images = import.meta.glob('../assets/*.{jpg,jpeg,png,webp,svg}', { eager: true, query: '?url', import: 'default' })
+const images = import.meta.glob('../assets/homepage/*.{jpg,jpeg,png,webp,svg}', { eager: true, query: '?url', import: 'default' })
 const imageKeys = Object.keys(images)
 
 function slugify(text = '') {

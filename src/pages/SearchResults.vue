@@ -3,21 +3,21 @@
     <section class="border-b border-[#E2E8F0] bg-white py-0 shadow-sm 2xl:py-7">
       <div class="mx-auto grid max-w-[1960px] grid-cols-1 gap-12 px-0 2xl:grid-cols-[1fr_326px_274px_282px] 2xl:gap-6 2xl:px-10">
         <div class="flex h-[108px] items-center rounded-l-[28px] border border-[#D6DAE8] bg-white px-3 2xl:h-[92px] 2xl:rounded-[16px] 2xl:bg-[#F1F3FA] 2xl:px-7">
-          <MapPinIcon class="h-14 w-14 shrink-0 text-[#005CBD] 2xl:h-8 2xl:w-8" />
+          <img :src="destinationIcon" alt="" class="h-14 w-14 shrink-0 object-contain 2xl:h-8 2xl:w-8" />
           <div class="ml-3 2xl:ml-5">
             <p class="text-[40px] leading-10 text-[#4B5563] 2xl:text-xl 2xl:leading-6">Destination</p>
             <p class="text-[48px] font-bold leading-[1.05] 2xl:text-2xl 2xl:leading-7">{{ destinationLabel }}</p>
           </div>
         </div>
         <div class="flex h-[108px] items-center rounded-l-[28px] border border-[#D6DAE8] bg-white px-3 2xl:h-[92px] 2xl:rounded-[16px] 2xl:bg-[#F1F3FA] 2xl:px-7">
-          <CalendarIcon class="h-14 w-14 shrink-0 text-[#005CBD] 2xl:h-8 2xl:w-8" />
+          <img :src="dateIcon" alt="" class="h-14 w-14 shrink-0 object-contain 2xl:h-8 2xl:w-8" />
           <div class="ml-3 2xl:ml-5">
             <p class="text-[40px] leading-10 text-[#4B5563] 2xl:text-xl 2xl:leading-6">Dates</p>
             <p class="text-[48px] font-bold leading-[1.05] 2xl:text-2xl 2xl:leading-7">{{ dateLabel }}</p>
           </div>
         </div>
         <div class="flex h-[108px] items-center rounded-l-[28px] border border-[#D6DAE8] bg-white px-3 2xl:h-[92px] 2xl:rounded-[16px] 2xl:bg-[#F1F3FA] 2xl:px-7">
-          <UserIcon class="h-14 w-14 shrink-0 text-[#005CBD] 2xl:h-8 2xl:w-8" />
+          <img :src="travelerIcon" alt="" class="h-14 w-14 shrink-0 object-contain 2xl:h-8 2xl:w-8" />
           <div class="ml-3 2xl:ml-5">
             <p class="text-[40px] leading-10 text-[#4B5563] 2xl:text-xl 2xl:leading-6">Travelers</p>
             <p class="text-[48px] font-bold leading-[1.05] 2xl:text-2xl 2xl:leading-7">{{ store.travelers }}</p>
@@ -33,7 +33,7 @@
       <aside>
         <div class="rounded-none bg-transparent px-0 py-8 shadow-none 2xl:rounded-[14px] 2xl:bg-white 2xl:px-7 2xl:shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
           <div class="mb-8 flex items-center gap-3">
-            <FilterIcon class="h-14 w-14 text-[#005CBD] 2xl:h-8 2xl:w-8" />
+            <img :src="filterIcon" alt="" class="h-14 w-14 object-contain 2xl:h-8 2xl:w-8" />
             <h2 class="text-3xl font-medium">Filters</h2>
           </div>
 
@@ -54,14 +54,7 @@
         </div>
 
         <div class="relative mt-12 h-[250px] overflow-hidden rounded-[14px] bg-[#95D2DE] shadow-[0_10px_24px_rgba(15,23,42,0.10)]">
-          <div class="absolute inset-0 opacity-80">
-            <div class="absolute left-14 top-12 h-36 w-64 rotate-[-12deg] rounded-[45%] bg-[#08758E] blur-[1px]"></div>
-            <div class="absolute right-12 top-20 h-24 w-28 rounded-[45%] bg-[#08758E] blur-[1px]"></div>
-            <div class="absolute left-28 bottom-8 h-20 w-40 rotate-[18deg] rounded-[45%] bg-[#08758E] blur-[1px]"></div>
-          </div>
-          <MapPinIcon class="absolute left-14 top-10 h-10 w-10 text-[#5CC1D3]" />
-          <MapPinIcon class="absolute right-24 top-28 h-8 w-8 text-[#5CC1D3]" />
-          <MapPinIcon class="absolute left-40 bottom-16 h-7 w-7 text-[#5CC1D3]" />
+          <img :src="mapPreview" alt="" class="absolute inset-0 h-full w-full object-cover" />
           <button class="absolute left-1/2 top-1/2 flex h-16 -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-full bg-white px-7 text-2xl font-medium text-[#005CBD] shadow-[0_10px_24px_rgba(15,23,42,0.16)]">
             <MapIcon class="h-7 w-7" />
             View on Map
@@ -84,7 +77,7 @@
         <section class="overflow-hidden rounded-[26px] border-[7px] border-[#005CBD] bg-white shadow-[0_18px_35px_rgba(15,23,42,0.08)]">
           <div class="flex h-[82px] items-center justify-between bg-[#F8E9EF] px-9">
             <div class="flex items-center gap-4 text-3xl text-[#B61B4A]">
-              <FlameIcon class="h-8 w-8" />
+              <img :src="fireIcon" alt="" class="h-8 w-8" />
               <span>Flash Deals for You</span>
             </div>
             <div class="flex items-center gap-3">
@@ -143,6 +136,18 @@
 import { computed, h } from 'vue'
 import { useRouter } from 'vue-router'
 import store from '../store'
+import mapPreview from '../assets/SearchResults/View on maps.jpeg'
+import destinationIcon from '../assets/SearchResults/Destination.png'
+import dateIcon from '../assets/SearchResults/date.png'
+import travelerIcon from '../assets/SearchResults/traveler.png'
+import filterIcon from '../assets/SearchResults/filter.png'
+import fireIcon from '../assets/SearchResults/fire.png'
+import resultList1 from '../assets/SearchResults/result-list-1.png'
+import resultList2 from '../assets/SearchResults/result-list-2.png'
+import resultList3 from '../assets/SearchResults/result-list-3.png'
+import resultList4 from '../assets/SearchResults/result-list-4.png'
+import resultList5 from '../assets/SearchResults/result-list-5.png'
+import resultList6 from '../assets/SearchResults/result-list-6.png'
 
 const router = useRouter()
 const destinationLabel = computed(() => store.searchQuery || 'Bali, Indonesia')
@@ -160,7 +165,7 @@ const flashDeals = [
     discount: '60% OFF',
     original: '1,200',
     price: '480',
-    image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?auto=format&fit=crop&w=820&q=80'
+    image: resultList1
   },
   {
     id: 2,
@@ -169,7 +174,7 @@ const flashDeals = [
     discount: '45% OFF',
     original: '450',
     price: '247',
-    image: 'https://images.unsplash.com/photo-1535827841776-24afc1e255ac?auto=format&fit=crop&w=820&q=80'
+    image: resultList2
   },
   {
     id: 3,
@@ -178,7 +183,7 @@ const flashDeals = [
     discount: '35% OFF',
     original: '680',
     price: '442',
-    image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=820&q=80'
+    image: resultList3
   }
 ]
 
@@ -191,7 +196,7 @@ const hotels = [
     original: '320',
     price: '284',
     note: 'Only 2 rooms left at this price!',
-    image: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=920&q=80',
+    image: resultList4,
     badge: 'Top Choice',
     amenities: ['Free Wi-Fi', 'Pool', 'Breakfast']
   },
@@ -202,7 +207,7 @@ const hotels = [
     reviews: '856 reviews',
     price: '415',
     note: 'Free cancellation before Oct 10',
-    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=920&q=80',
+    image: resultList5,
     amenities: ['Private Beach', 'Spa']
   },
   {
@@ -212,7 +217,7 @@ const hotels = [
     reviews: '2,102 reviews',
     price: '189',
     note: 'Breakfast + Dinner deal available',
-    image: 'https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?auto=format&fit=crop&w=920&q=80',
+    image: resultList6,
     amenities: ['Airport Shuttle', 'Gym']
   }
 ]

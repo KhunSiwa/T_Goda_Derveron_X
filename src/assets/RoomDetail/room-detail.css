@@ -1,0 +1,1213 @@
+/* ==========================================================================
+   room-detail.css
+   Converted from Figma export → Vue-ready, Copilot-friendly CSS
+   Font: Plus Jakarta Sans (load via Google Fonts or @font-face)
+   Usage: Add <style scoped> in your Vue SFC and paste these rules,
+          or import globally in main.js / assets/main.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   DESIGN TOKENS — edit here to retheme the entire page
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand colors */
+  --color-primary:       #005CBD;   /* main blue — CTAs, icons, links */
+  --color-primary-dark:  #2563EB;   /* nav logo + active nav link */
+  --color-accent:        #B61B4A;   /* sale badge, "Book Now" button */
+  --color-success:       #16A34A;   /* free cancellation, free breakfast */
+  --color-warning:       #FACC15;   /* star ratings */
+  --color-error:         #BA1A1A;   /* "Only 1 room left!" */
+
+  /* Text */
+  --color-text-primary:  #191C22;
+  --color-text-secondary:#424753;
+  --color-text-muted:    #64748B;
+  --color-text-inverse:  #FFFFFF;
+
+  /* Surfaces */
+  --color-bg-page:       #F8F9FA;
+  --color-bg-card:       #FFFFFF;
+  --color-bg-header-row: #F2F3FC;
+  --color-bg-highlight:  rgba(239, 246, 255, 0.5); /* featured room row */
+  --color-bg-nav:        rgba(255, 255, 255, 0.8);
+
+  /* Borders */
+  --color-border:        rgba(194, 198, 213, 0.3);
+  --color-border-solid:  #C2C6D5;
+  --color-border-nav:    #E2E8F0;
+
+  /* Progress / bars */
+  --color-bar-bg:        #E7E8F1;
+
+  /* Avatar palettes */
+  --color-avatar-blue-bg:   #D7E2FF;
+  --color-avatar-blue-text: #001A40;
+  --color-avatar-pink-bg:   #FFD9DD;
+  --color-avatar-pink-text: #400013;
+  --color-avatar-peach-bg:  #FFDCBD;
+  --color-avatar-peach-text:#2C1600;
+
+  /* Typography */
+  --font-family:         'Plus Jakarta Sans', sans-serif;
+  --font-weight-normal:  400;
+  --font-weight-semibold:600;
+  --font-weight-bold:    700;
+  --font-weight-black:   900;
+
+  /* Spacing scale */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  56px;
+  --space-9:  64px;
+  --space-10: 96px;
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:   0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md:   0px 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-cta:  0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+                 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+
+  /* Layout */
+  --max-width:   1280px;
+  --content-width: 1232px;
+}
+
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+/* page-wrapper
+   Root container for the Room Detail page.
+   Usage: <div class="page-wrapper"> */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: var(--color-bg-page);
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  isolation: isolate;
+}
+
+/* main-content
+   Central scrollable area below the sticky nav.
+   Usage: <main class="main-content"> */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-10) var(--space-5) var(--space-9);
+  gap: var(--space-5);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================================
+   HEADER / NAVIGATION
+   ========================================================================== */
+
+/* site-header
+   Sticky top nav bar with blur backdrop.
+   Usage: <header class="site-header"> */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  max-width: var(--max-width);
+  height: 64px;
+  background: var(--color-bg-nav);
+  border-bottom: 1px solid var(--color-border-nav);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-sizing: border-box;
+}
+
+/* site-header__inner
+   Usage: <div class="site-header__inner"> */
+.site-header__inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-5);
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* site-header__left
+   Logo + nav links group.
+   Usage: <div class="site-header__left"> */
+.site-header__left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* site-header__logo
+   Brand wordmark.
+   Usage: <span class="site-header__logo">T-Goda</span> */
+.site-header__logo {
+  font-size: 24px;
+  font-weight: var(--font-weight-black);
+  line-height: 32px;
+  letter-spacing: -1.2px;
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+/* site-header__nav
+   Horizontal nav link list.
+   Usage: <nav class="site-header__nav"><a>…</a></nav> */
+.site-header__nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* site-header__nav-link
+   Usage: <a class="site-header__nav-link">Hotels</a> */
+.site-header__nav-link {
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 20px;
+  letter-spacing: -0.35px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-header__nav-link:hover {
+  color: var(--color-primary-dark);
+}
+
+/* site-header__nav-link--active
+   Modifier: currently active nav item.
+   Usage: <a class="site-header__nav-link site-header__nav-link--active"> */
+.site-header__nav-link--active {
+  color: var(--color-primary-dark);
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--color-primary-dark);
+}
+
+/* site-header__actions
+   Right-hand CTA area.
+   Usage: <div class="site-header__actions"> */
+.site-header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+
+/* ==========================================================================
+   BUTTONS
+   All buttons share base + variant modifiers.
+   ========================================================================== */
+
+/* btn
+   Base button styles. Always combine with a variant.
+   Usage: <button class="btn btn--primary">Book Now</button> */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 8px 16px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 20px;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn:hover { opacity: 0.9; }
+.btn:active { opacity: 0.8; }
+
+/* btn--primary: blue filled */
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+/* btn--accent: red/pink filled — used for "Book Now" & sale CTAs */
+.btn--accent {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-cta);
+  font-size: 16px;
+  padding: 12px 32px;
+}
+
+/* btn--outline: ghost button with border */
+.btn--outline {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-solid);
+  font-size: 16px;
+}
+
+/* btn--ghost: no border, text only */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+/* btn--sm: compact table / card button */
+.btn--sm {
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* btn--lg: full size CTA */
+.btn--lg {
+  padding: 12px 32px;
+  font-size: 16px;
+}
+
+
+/* ==========================================================================
+   BREADCRUMB
+   ========================================================================== */
+
+/* breadcrumb
+   Usage: <nav class="breadcrumb" aria-label="breadcrumb">
+            <a class="breadcrumb__link">Hotels</a>
+            <span class="breadcrumb__sep" aria-hidden="true">›</span>
+            <span class="breadcrumb__current">Grand Azure Resort</span>
+          </nav> */
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.breadcrumb__link {
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb__link:hover { color: var(--color-primary); }
+
+.breadcrumb__sep {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  user-select: none;
+}
+
+.breadcrumb__current {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+
+/* ==========================================================================
+   HOTEL HEADER (title block + action row)
+   ========================================================================== */
+
+/* hotel-header
+   Sits between breadcrumb and image gallery.
+   Usage: <div class="hotel-header"> */
+.hotel-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  gap: var(--space-5);
+}
+
+/* hotel-header__meta — left column */
+.hotel-header__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* hotel-header__top-row — stars + score badge */
+.hotel-header__top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* hotel-header__title
+   Usage: <h1 class="hotel-header__title">Grand Azure Resort</h1> */
+.hotel-header__title {
+  font-size: 16px;   /* update to 28–32px in production for a real H1 */
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* hotel-header__location — pin icon + address + "Show on map" */
+.hotel-header__location {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+}
+
+.hotel-header__location-link {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-decoration: none;
+  padding-left: var(--space-2);
+}
+
+/* hotel-header__actions — right column: Save, Share, Book */
+.hotel-header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+
+/* ==========================================================================
+   SCORE BADGE  (e.g. "9.2" on blue pill)
+   Usage: <span class="score-badge">9.2</span>
+   ========================================================================== */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   STAR RATING
+   Usage: <div class="stars stars--5"></div>   or render ★ chars
+   ========================================================================== */
+.stars {
+  display: inline-flex;
+  gap: 0;
+  color: var(--color-warning);
+  font-size: 16px;
+  line-height: 1;
+}
+
+
+/* ==========================================================================
+   IMAGE GALLERY
+   5-panel mosaic: 1 large left + 2×2 grid right.
+   ========================================================================== */
+
+/* image-gallery
+   Usage: <div class="image-gallery"> */
+.image-gallery {
+  position: relative;
+  width: 100%;
+  height: 508px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* image-gallery__panel — each individual image tile */
+.image-gallery__panel {
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Layout positions (adjust % for responsiveness) */
+.image-gallery__panel--main  { left: 0;    right: 50.65%;top: 8px; bottom: 0; }
+.image-gallery__panel--tr    { left: 50.65%;right: 25.32%;top: 8px; bottom: 50.59%; }
+.image-gallery__panel--br    { left: 75.32%;right: 0;    top: 8px; bottom: 50.59%; }
+.image-gallery__panel--bl    { left: 50.65%;right: 25.32%;top: 50.59%;bottom: 0; }
+.image-gallery__panel--last  { left: 75.32%;right: 0;    top: 50.59%;bottom: 0; }
+
+/* image-gallery__overlay — "+X more" overlay on the last tile */
+.image-gallery__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+}
+
+
+/* ==========================================================================
+   MAIN CONTENT GRID  (left prose + right sidebar)
+   ========================================================================== */
+
+/* content-grid
+   Usage: <div class="content-grid"> */
+.content-grid {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 378px;
+  gap: var(--space-5);
+  padding-top: var(--space-5);
+}
+
+/* content-grid__left */
+.content-grid__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+/* content-grid__right */
+.content-grid__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+
+/* ==========================================================================
+   SECTION  (generic section wrapper with heading)
+   ========================================================================== */
+
+/* section
+   Usage: <section class="section">
+            <h2 class="section__heading">Overview</h2>
+            <p class="section__body">…</p>
+          </section> */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.section__heading {
+  font-size: 16px;       /* bump to 20–24px in production */
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.section__body {
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 26px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   AMENITIES GRID
+   ========================================================================== */
+
+/* amenities
+   Usage: <ul class="amenities"> */
+.amenities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: var(--space-3);
+  column-gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* amenities__item — icon + label pair */
+.amenities__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+/* amenities__icon — blue SVG/icon slot */
+.amenities__icon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  width: 24px;
+  height: 24px;
+}
+
+/* amenities__show-more — "Show all amenities ↓" link */
+.amenities__show-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+
+/* ==========================================================================
+   CARD  (white rounded card with border + shadow)
+   Reused for the rating card, map card, and review cards.
+   ========================================================================== */
+
+/* card
+   Usage: <div class="card"> */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+/* card--padded — inner padding variant */
+.card--padded {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+
+/* ==========================================================================
+   RATING CARD  (score + progress bars)
+   ========================================================================== */
+
+/* rating-card
+   Usage: <div class="card card--padded rating-card"> */
+.rating-card__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* rating-card__label — "Guest Rating" + subtitle */
+.rating-card__label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rating-card__label-title {
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-primary);
+}
+
+.rating-card__label-sub {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+/* rating-card__score — big blue number tile */
+.rating-card__score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  line-height: 32px;
+  color: var(--color-text-inverse);
+}
+
+/* rating-card__bars — list of progress bars */
+.rating-card__bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* rating-bar
+   Usage: <div class="rating-bar">
+            <span class="rating-bar__label">Cleanliness</span>
+            <span class="rating-bar__value">9.5</span>
+            <div class="rating-bar__track">
+              <div class="rating-bar__fill" style="width: 95%"></div>
+            </div>
+          </div> */
+.rating-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rating-bar__top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+.rating-bar__track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--color-bar-bg);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.rating-bar__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  /* Width set via inline style: style="width: 95%" */
+}
+
+
+/* ==========================================================================
+   MAP CARD  (image + location text)
+   ========================================================================== */
+
+/* map-card
+   Usage: <div class="card map-card"> */
+.map-card__image {
+  width: 100%;
+  height: 192px;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  display: block;
+}
+
+.map-card__body {
+  padding: var(--space-4);
+  background: var(--color-bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.map-card__title {
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.map-card__sub {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   ROOM SELECTION TABLE
+   ========================================================================== */
+
+/* room-section
+   Usage: <section class="room-section section"> */
+.room-section {
+  padding-top: 40px;
+}
+
+/* room-table
+   Usage: <div class="card room-table"> */
+.room-table {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+/* room-table__header — column headings row */
+.room-table__header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.4fr 1.6fr auto;
+  background: var(--color-bg-header-row);
+  padding: 0;
+}
+
+.room-table__th {
+  padding: var(--space-5);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
+/* room-table__body — rows container */
+.room-table__body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* room-row — a single room option
+   Usage: <div class="room-row">…</div>
+          Add --featured modifier for the highlighted row */
+.room-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.4fr 1.6fr auto;
+  align-items: center;
+  padding: var(--space-5) 0 var(--space-5) var(--space-5);
+  gap: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  transition: background 0.15s;
+}
+
+.room-row:first-child { border-top: none; }
+.room-row:hover { background: rgba(239, 246, 255, 0.3); }
+
+/* room-row--featured — limited-time / promoted row */
+.room-row--featured {
+  background: var(--color-bg-highlight);
+  border-left: 4px solid var(--color-primary);
+  padding-left: calc(var(--space-5) - 4px);  /* compensate for border */
+}
+
+/* room-row__info — name, details, "More photos" link */
+.room-row__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.room-row__name {
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 20px;
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.room-row__details {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.room-row__photos-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 20px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* room-row__bed — person/bed icons */
+.room-row__bed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-primary);
+}
+
+/* room-row__price — original + discounted price block */
+.room-row__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.room-row__price-original {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+  text-decoration: line-through;
+}
+
+.room-row__price-current {
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  line-height: 32px;
+  color: var(--color-text-primary);
+}
+
+/* room-row__price-current--sale: sale price in red */
+.room-row__price-current--sale {
+  color: var(--color-accent);
+}
+
+.room-row__price-note {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
+/* room-row__perks — free cancellation / breakfast list */
+.room-row__perks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.room-row__perk {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-success);
+}
+
+.room-row__perk-icon {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--color-success);
+}
+
+/* room-row__urgency — "Only 1 room left!" */
+.room-row__urgency {
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  line-height: 20px;
+  color: var(--color-error);
+}
+
+/* room-row__cta — right-most action cell */
+.room-row__cta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-5);
+}
+
+/* sale-badge — "LIMITED TIME" red pill */
+.sale-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  line-height: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   GUEST REVIEWS
+   ========================================================================== */
+
+/* reviews-section
+   Usage: <section class="reviews-section section"> */
+.reviews-section {
+  padding-top: var(--space-8);
+}
+
+.reviews-section__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.reviews-section__all-link {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* reviews-grid — 3-column card grid */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+/* review-card
+   Usage: <article class="card review-card"> */
+.review-card {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 220px;
+}
+
+.review-card__meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-card__date {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-secondary);
+}
+
+.review-card__quote {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: var(--font-weight-normal);
+  line-height: 24px;
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.review-card__author {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* review-card__avatar — initials circle */
+.review-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+/* Avatar color variants */
+.review-card__avatar--blue  { background: var(--color-avatar-blue-bg);  color: var(--color-avatar-blue-text); }
+.review-card__avatar--pink  { background: var(--color-avatar-pink-bg);  color: var(--color-avatar-pink-text); }
+.review-card__avatar--peach { background: var(--color-avatar-peach-bg); color: var(--color-avatar-peach-text);}
+
+.review-card__author-name {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+.review-card__author-location {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-text-secondary);
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+/* site-footer
+   Usage: <footer class="site-footer"> */
+.site-footer {
+  width: 100%;
+  background: #F8FAFC;
+  border-top: 1px solid var(--color-border-nav);
+  box-sizing: border-box;
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--space-5);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 48px var(--space-5);
+}
+
+/* site-footer__brand — logo + description column */
+.site-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  grid-column: 1 / 2;
+}
+
+.site-footer__brand-name {
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  line-height: 28px;
+  color: #0F172A;
+  margin: 0;
+}
+
+.site-footer__brand-desc {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+  max-width: 384px;
+  margin: 0;
+}
+
+.site-footer__copyright {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+}
+
+.site-footer__socials {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.site-footer__social-link {
+  font-size: 24px;
+  color: #D1D5DB;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.site-footer__social-link:hover { color: var(--color-primary); }
+
+/* site-footer__col — link columns (Company, Support, Legal) */
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.site-footer__col-heading {
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  line-height: 20px;
+  color: #0F172A;
+  margin: 0;
+}
+
+.site-footer__link {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.site-footer__link:hover { color: var(--color-primary); }
+
+
+/* ==========================================================================
+   UTILITIES
+   Small single-purpose helpers used across components.
+   ========================================================================== */
+
+/* u-visually-hidden — accessible hidden text */
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* u-text-primary / secondary */
+.u-text-primary   { color: var(--color-text-primary); }
+.u-text-secondary { color: var(--color-text-secondary); }
+.u-text-muted     { color: var(--color-text-muted); }
+.u-text-accent    { color: var(--color-accent); }
+.u-text-success   { color: var(--color-success); }
+
+/* u-flex-row / col */
+.u-flex-row { display: flex; flex-direction: row; align-items: center; }
+.u-flex-col { display: flex; flex-direction: column; }
+
+/* u-gap-* */
+.u-gap-1 { gap: var(--space-1); }
+.u-gap-2 { gap: var(--space-2); }
+.u-gap-3 { gap: var(--space-3); }
+.u-gap-4 { gap: var(--space-4); }
+.u-gap-5 { gap: var(--space-5); }
+
+
+/* ==========================================================================
+   VUE SCOPED USAGE NOTE
+   --------------------------------------------------------------------------
+   In a Vue SFC you can either:
+
+   A) Global import (recommended for shared pages):
+      // main.js
+      import '@/assets/room-detail.css'
+
+   B) Scoped per component — paste into <style> block:
+      <style>
+        @import '@/assets/room-detail.css';
+      </style>
+
+   C) Inline scoped with overrides:
+      <style scoped>
+        .room-row--featured { --color-primary: #0070f3; }
+      </style>
+
+   Copilot tip: CSS variables are declared on :root so Copilot can suggest
+   var(--color-*) completions throughout your template and style blocks.
+   ========================================================================== */

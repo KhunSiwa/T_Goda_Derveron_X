@@ -82,6 +82,10 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import mock from '../data/mockHotels'
+import galleryOne from '../assets/RoomDetail/image-gallery-1.png'
+import galleryTwo from '../assets/RoomDetail/image-gallery-2.png'
+import galleryThree from '../assets/RoomDetail/image-gallery-3.png'
+import galleryFour from '../assets/RoomDetail/image-gallery-4(need overlay).png'
 
 const route = useRoute()
 const id = route.params.id
@@ -89,14 +93,13 @@ const id = route.params.id
 const hotel = computed(() => mock.find(h => String(h.id) === String(id)) || mock[0])
 
 const fallbackImages = [
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80'
+  galleryOne,
+  galleryTwo,
+  galleryThree,
+  galleryFour
 ]
 
 const galleryImages = computed(() => {
-  const images = [hotel.value.image, ...(hotel.value.images || [])].filter(Boolean)
-  return Array.from({ length: 4 }, (_, index) => images[index] || fallbackImages[index])
+  return fallbackImages
 })
 </script>
