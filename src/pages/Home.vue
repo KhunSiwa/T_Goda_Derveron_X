@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-gray-50 pt-16 w-[1280px] h-[3110px] mx-auto rotate-0 opacity-100 overflow-auto">
+  <main class="bg-gray-50 pt-16 pb-16 w-[1280px] mx-auto rotate-0 opacity-100">
     <section v-bind:style="{ backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${hero})` }" class="relative w-[1200px] max-w-[calc(100%-80px)] min-h-[520px] h-[520px] mx-[40px] rounded-[16px] overflow-hidden bg-cover bg-center pt-[114px] pb-[114px] px-[16px] mb-12">
       <div class="absolute inset-0 bg-black/60" aria-hidden="true"></div>
       <div class="relative z-10 w-[768px] max-w-[90%] mx-auto text-center text-white">
@@ -26,22 +26,18 @@
       </div>
     </section>
 
-    <section class="grid md:grid-cols-3 gap-6 px-6 py-12 mt-8">
-      <div class="bg-gray-100 rounded-lg p-6 text-center">
-        <div class="w-12 h-12 mx-auto rounded-full bg-blue-100 mb-4"></div>
-        <h3 class="font-bold">Best Price Guarantee</h3>
-        <p class="text-sm text-gray-600 mt-2">We compare prices so you don't have to.</p>
-      </div>
-      <div class="bg-gray-100 rounded-lg p-6 text-center">
-        <div class="w-12 h-12 mx-auto rounded-full bg-pink-100 mb-4"></div>
-        <h3 class="font-bold">24/7 Support</h3>
-        <p class="text-sm text-gray-600 mt-2">We're here for you anytime, anywhere.</p>
-      </div>
-      <div class="bg-gray-100 rounded-lg p-6 text-center">
-        <div class="w-12 h-12 mx-auto rounded-full bg-yellow-100 mb-4"></div>
-        <h3 class="font-bold">Secure Booking</h3>
-        <p class="text-sm text-gray-600 mt-2">Your data and payments are safe with us.</p>
-      </div>
+    <section class="grid grid-cols-1 gap-7 px-6 py-12 mt-8 md:grid-cols-3">
+      <article
+        v-for="feature in featureCards"
+        :key="feature.title"
+        class="flex min-h-[240px] flex-col items-center rounded-[14px] bg-[#E9E9E9] px-8 py-10 text-center"
+      >
+        <div class="flex h-16 w-16 items-center justify-center rounded-full" :class="feature.iconBg">
+          <img :src="feature.icon" alt="" class="h-8 w-8 object-contain" />
+        </div>
+        <h3 class="mt-7 text-[24px] font-extrabold leading-8 text-[#191C22]">{{ feature.title }}</h3>
+        <p class="mt-5 max-w-[340px] text-lg leading-7 text-[#4B5563]">{{ feature.description }}</p>
+      </article>
     </section>
 
     <section class="px-4 py-12 mt-10">
@@ -74,40 +70,49 @@
       </div>
     </section>
 
-    <section class="relative mx-6 my-12 min-h-[424px] overflow-hidden rounded-[24px] bg-[#B61B4A] px-8 py-12 text-white md:h-[424px] md:px-[50px] md:py-[58px]">
-      <div class="absolute right-[410px] top-[-10px] hidden h-[360px] w-[280px] rotate-[-45deg] rounded-[34px] bg-black/15 md:block" aria-hidden="true">
-        <div class="absolute left-10 top-8 h-10 w-10 rounded-full bg-[#C61A52]"></div>
-        <div class="absolute bottom-[84px] left-[72px] h-[84px] w-[84px] rotate-45 bg-[#C61A52] before:absolute before:-top-[42px] before:left-0 before:h-[84px] before:w-[84px] before:rounded-full before:bg-[#C61A52] after:absolute after:left-[42px] after:top-0 after:h-[84px] after:w-[84px] after:rounded-full after:bg-[#C61A52]"></div>
+    <section class="relative mx-6 my-12 min-h-[424px] overflow-hidden rounded-[24px] bg-[#B61B4A] px-8 py-12 text-white md:h-[424px] md:px-[80px] md:py-[66px]">
+      <div class="absolute left-[515px] top-[-92px] hidden h-[520px] w-[330px] rotate-[-45deg] rounded-[38px] bg-black/15 md:block" aria-hidden="true">
+        <div class="absolute left-[72px] top-[114px] h-10 w-10 rounded-full bg-[#C61A52]"></div>
+        <div class="absolute bottom-[118px] left-[112px] h-[104px] w-[104px] rotate-45 bg-[#C61A52] before:absolute before:-top-[52px] before:left-0 before:h-[104px] before:w-[104px] before:rounded-full before:bg-[#C61A52] after:absolute after:left-[52px] after:top-0 after:h-[104px] after:w-[104px] after:rounded-full after:bg-[#C61A52]"></div>
       </div>
 
       <img
         :src="promoBanner"
         alt=""
-        class="absolute right-[42px] top-[50px] hidden h-[326px] w-[344px] rotate-[3deg] rounded-[18px] object-cover shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:block"
+        class="absolute right-[42px] top-[56px] hidden h-[318px] w-[344px] rotate-[3deg] rounded-[18px] object-cover shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:block"
       />
 
       <div class="relative z-10 max-w-[560px]">
-        <h2 class="text-[46px] font-extrabold leading-[1.08] tracking-normal md:text-[50px]">
+        <h2 class="text-[46px] font-extrabold leading-[1.08] tracking-normal md:text-[52px]">
           Summer Sales: Up to 40% Off!
         </h2>
         <p class="mt-6 max-w-[540px] text-[20px] leading-8 text-white/90">
           Exclusive member deals on flights and luxury hotels for your next summer getaway. Valid until Oct 31st.
         </p>
-        <div class="mt-9 flex flex-col gap-4 sm:flex-row">
-          <button class="h-[58px] rounded-[12px] bg-white px-8 text-xl font-bold text-[#B61B4A] sm:min-w-[188px]">Explore Deals</button>
-          <button class="h-[58px] rounded-[12px] border-2 border-white px-8 text-xl font-bold text-white sm:min-w-[224px]">Join Club T-Goda</button>
+        <div class="mt-10 grid grid-cols-1 items-center gap-8 sm:grid-cols-[184px_224px]">
+          <button class="h-[58px] rounded-[12px] bg-white px-8 text-xl font-bold text-[#B61B4A] whitespace-nowrap">Explore Deals</button>
+          <button class="h-[58px] bg-transparent px-0 text-left text-xl font-bold text-white whitespace-nowrap">Join Club T-Goda</button>
         </div>
       </div>
     </section>
 
-    <section class="mx-6 my-12 bg-gray-200 rounded-3xl p-12">
-      <div class="max-w-2xl mx-auto text-center">
-        <h2 class="text-2xl font-bold">Stay in the loop</h2>
-        <p class="mt-2 text-gray-700">Subscribe to our newsletter for travel inspiration and deals.</p>
-        <div class="mt-6 flex justify-center gap-4">
-          <input class="px-6 py-4 rounded-lg border border-gray-300 w-2/3" placeholder="Your email address" />
-          <button class="px-6 py-4 bg-[#005CBD] text-white rounded-lg">Subscribe</button>
+    <section class="mx-6 mt-12 mb-0 flex min-h-[326px] items-center justify-center rounded-[24px] bg-[#E9EBF4] px-6 py-12">
+      <div class="mx-auto w-full max-w-[740px] text-center">
+        <div class="mx-auto flex h-10 w-10 items-center justify-center text-[#005CBD]">
+          <svg viewBox="0 0 32 32" class="h-10 w-10" fill="none" aria-hidden="true">
+            <path d="M5 8h22v16H5V8Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="m6 9 10 8 10-8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
+        <h2 class="mt-6 text-[32px] font-extrabold leading-10 text-[#191C22]">Get Travel Deals Directly</h2>
+        <p class="mx-auto mt-5 max-w-[690px] text-[20px] leading-8 text-[#4B5563]">
+          Subscribe to our newsletter and get early access to hidden gems and seasonal discounts. No spam, only adventure.
+        </p>
+        <div class="mx-auto mt-7 grid max-w-[690px] grid-cols-1 gap-4 sm:grid-cols-[1fr_188px]">
+          <input class="h-[60px] rounded-[10px] border border-[#6B7FC6] bg-white px-6 text-[18px] text-[#191C22] outline-none placeholder:text-[#6B7280]" placeholder="Your email address" />
+          <button class="h-[60px] rounded-[10px] bg-[#005CBD] px-6 text-[18px] font-bold text-white">Subscribe Now</button>
+        </div>
+        <p class="mt-5 text-sm leading-5 text-[#4B5563]">By subscribing, you agree to our Terms of Service and Privacy Policy.</p>
       </div>
     </section>
 
@@ -118,6 +123,30 @@
 <script setup>
 import hero from '../assets/Image.png'
 import promoBanner from '../assets/img-promobanner.png'
+import firstIcon from '../assets/first icon.png'
+import secondIcon from '../assets/second icon.png'
+import thirdIcon from '../assets/third icon.png'
+
+const featureCards = [
+  {
+    title: 'Best Price Guarantee',
+    description: "Find a lower price? We'll match it and give you a voucher for your next trip.",
+    icon: firstIcon,
+    iconBg: 'bg-[#CFE0F6]'
+  },
+  {
+    title: '24/7 Global Support',
+    description: 'Our world-class support team is here to help you anywhere, anytime in 40+ languages.',
+    icon: secondIcon,
+    iconBg: 'bg-[#F6CCD9]'
+  },
+  {
+    title: 'Flexible Booking',
+    description: 'Life happens. Most of our properties offer free cancellation for peace of mind.',
+    icon: thirdIcon,
+    iconBg: 'bg-[#EDD9B4]'
+  }
+]
 
 const destinationCards = [
   { city: 'Bangkok', country: 'Thailand', price: 120, imageAlias: 'thailand' },
