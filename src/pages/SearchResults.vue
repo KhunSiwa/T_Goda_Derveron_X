@@ -93,7 +93,16 @@
             </div>
           </div>
 
-          <article v-for="deal in flashDeals" :key="deal.name" class="grid min-h-[306px] grid-cols-[410px_1fr_260px] border-t border-[#F1F1F3]">
+          <article
+            v-for="deal in flashDeals"
+            :key="deal.name"
+            class="grid min-h-[306px] cursor-pointer grid-cols-[410px_1fr_260px] border-t border-[#F1F1F3] transition hover:bg-[#F8F9FA]"
+            role="button"
+            tabindex="0"
+            @click="goToRoomDetail(deal.id)"
+            @keydown.enter="goToRoomDetail(deal.id)"
+            @keydown.space.prevent="goToRoomDetail(deal.id)"
+          >
             <div class="relative overflow-hidden">
               <img :src="deal.image" :alt="deal.name" class="h-full w-full object-cover" />
               <span class="absolute left-7 top-5 rounded-[10px] bg-[#B61B4A] px-5 py-2 text-xl font-bold text-white">{{ deal.discount }}</span>
@@ -109,7 +118,7 @@
               <p class="text-lg text-[#4B5563] line-through">${{ deal.original }}</p>
               <p class="text-[42px] font-bold leading-[1.05] text-[#B61B4A]">${{ deal.price }}</p>
               <p class="mb-5 text-xl text-[#4B5563]">/night</p>
-              <button class="h-12 rounded-[10px] bg-[#B61B4A] px-8 text-xl font-bold text-white">Claim</button>
+              <button class="h-12 rounded-[10px] bg-[#B61B4A] px-8 text-xl font-bold text-white" @click.stop="goToRoomDetail(deal.id)">Claim</button>
             </div>
           </article>
         </section>
@@ -132,13 +141,20 @@
 
 <script setup>
 import { computed, h } from 'vue'
+import { useRouter } from 'vue-router'
 import store from '../store'
 
+const router = useRouter()
 const destinationLabel = computed(() => store.searchQuery || 'Bali, Indonesia')
 const dateLabel = computed(() => `${store.dateRange.from || 'Oct 12'} - ${store.dateRange.to || 'Oct 19, 2024'}`)
 
+function goToRoomDetail(id) {
+  router.push({ name: 'RoomDetail', params: { id } })
+}
+
 const flashDeals = [
   {
+    id: 1,
     name: 'Mandala Sky Luxury Villas',
     location: 'Uluwatu, Bali • Cliff-top view',
     discount: '60% OFF',
@@ -147,6 +163,7 @@ const flashDeals = [
     image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?auto=format&fit=crop&w=820&q=80'
   },
   {
+    id: 2,
     name: 'Emerald Jungle Retreat',
     location: 'Ubud, Bali • Private Sanctuary',
     discount: '45% OFF',
@@ -155,6 +172,7 @@ const flashDeals = [
     image: 'https://images.unsplash.com/photo-1535827841776-24afc1e255ac?auto=format&fit=crop&w=820&q=80'
   },
   {
+    id: 3,
     name: 'Seminyak Shores Club',
     location: 'Seminyak, Bali • Beachfront Bliss',
     discount: '35% OFF',
