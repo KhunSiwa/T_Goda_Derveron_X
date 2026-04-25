@@ -44,36 +44,60 @@
       </div>
     </section>
 
-    <section class="px-6 py-12 mt-10">
-      <div class="flex items-end justify-between mb-6">
+    <section class="px-4 py-12 mt-10">
+      <div class="flex items-end justify-between mb-11">
         <div>
-          <h2 class="text-2xl font-bold">Trending Destinations</h2>
-          <p class="text-sm text-gray-600">Popular places our customers love</p>
+          <h2 class="text-[32px] leading-10 font-extrabold text-[#191C22]">Trending Destinations</h2>
+          <p class="text-lg leading-7 text-[#4B5563]">Handpicked favorites for your next adventure</p>
         </div>
-        <a class="text-indigo-600 font-semibold">See all</a>
+        <a class="text-[#005CBD] text-lg font-bold leading-7">View all</a>
       </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div v-for="(d, idx) in popular" :key="d.city + idx" class="rounded-xl overflow-hidden relative h-[376px] bg-gray-200">
-          <div class="absolute inset-0 bg-cover bg-center" :style="{ backgroundImage: `url(${imageForCity(d.city)})` }"></div>
-          <div class="absolute left-4 bottom-3 bg-white/90 px-3 py-1 rounded-full">
-            <div class="font-bold">{{ d.city }}</div>
-            <div class="text-xs text-gray-600">Starting from ${{ Math.floor(Math.random()*200+80) }}</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <article v-for="(d, idx) in destinationCards" :key="d.city" class="group">
+          <div class="relative h-[389px] rounded-[16px] overflow-hidden bg-gray-200">
+            <div
+              class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+              :style="{ backgroundImage: `url(${imageForDestination(d)})` }"
+            ></div>
+            <div v-if="idx === 0" class="absolute left-4 bottom-4 rounded-full bg-white/95 px-4 py-1.5 text-sm font-bold tracking-wide text-[#191C22] shadow-sm">
+              TOP RATED
+            </div>
           </div>
-        </div>
+          <div class="mt-4">
+            <h3 class="text-2xl leading-7 font-extrabold text-[#191C22]">{{ d.city }}, {{ d.country }}</h3>
+            <p class="mt-1 text-base leading-6 text-[#4B5563]">
+              Starting from <span class="font-bold text-[#005CBD]">${{ d.price }}</span>
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="mx-6 my-12 rounded-3xl bg-[#B61B4A] text-white p-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="max-w-md">
-        <h2 class="text-3xl font-extrabold">Special Offers — Book Today</h2>
-        <p class="mt-2 text-white/90">Limited-time deals on flights and hotels.</p>
-        <div class="mt-4 flex gap-4">
-          <button class="bg-white text-[#B61B4A] px-6 py-3 rounded-lg font-bold">Learn more</button>
-          <button class="border border-white text-white px-6 py-3 rounded-lg">Get the deal</button>
+    <section class="relative mx-6 my-12 min-h-[424px] overflow-hidden rounded-[24px] bg-[#B61B4A] px-8 py-12 text-white md:h-[424px] md:px-[50px] md:py-[58px]">
+      <div class="absolute right-[410px] top-[-10px] hidden h-[360px] w-[280px] rotate-[-45deg] rounded-[34px] bg-black/15 md:block" aria-hidden="true">
+        <div class="absolute left-10 top-8 h-10 w-10 rounded-full bg-[#C61A52]"></div>
+        <div class="absolute bottom-[84px] left-[72px] h-[84px] w-[84px] rotate-45 bg-[#C61A52] before:absolute before:-top-[42px] before:left-0 before:h-[84px] before:w-[84px] before:rounded-full before:bg-[#C61A52] after:absolute after:left-[42px] after:top-0 after:h-[84px] after:w-[84px] after:rounded-full after:bg-[#C61A52]"></div>
+      </div>
+
+      <img
+        :src="promoBanner"
+        alt=""
+        class="absolute right-[42px] top-[50px] hidden h-[326px] w-[344px] rotate-[3deg] rounded-[18px] object-cover shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:block"
+      />
+
+      <div class="relative z-10 max-w-[560px]">
+        <h2 class="text-[46px] font-extrabold leading-[1.08] tracking-normal md:text-[50px]">
+          Summer Sales: Up to 40% Off!
+        </h2>
+        <p class="mt-6 max-w-[540px] text-[20px] leading-8 text-white/90">
+          Exclusive member deals on flights and luxury hotels for your next summer getaway. Valid until Oct 31st.
+        </p>
+        <div class="mt-9 flex flex-col gap-4 sm:flex-row">
+          <button class="h-[58px] rounded-[12px] bg-white px-8 text-xl font-bold text-[#B61B4A] sm:min-w-[188px]">Explore Deals</button>
+          <button class="h-[58px] rounded-[12px] border-2 border-white px-8 text-xl font-bold text-white sm:min-w-[224px]">Join Club T-Goda</button>
         </div>
       </div>
-      <div class="w-80 h-80 bg-black/10 rounded-lg hidden md:block"></div>
     </section>
 
     <section class="mx-6 my-12 bg-gray-200 rounded-3xl p-12">
@@ -92,99 +116,35 @@
 </template>
 
 <script setup>
-import mock from '../data/mockHotels'
 import hero from '../assets/Image.png'
+import promoBanner from '../assets/img-promobanner.png'
 
-// build city counts
-const cityCounts = {}
-mock.forEach(h => {
-  const city = (h.location && h.location.city) || h.city || 'Unknown'
-  if (!cityCounts[city]) cityCounts[city] = { city, count: 0 }
-  cityCounts[city].count += 1
-})
-
-const popular = Object.values(cityCounts).sort((a, b) => b.count - a.count).slice(0, 8)
+const destinationCards = [
+  { city: 'Bangkok', country: 'Thailand', price: 120, imageAlias: 'thailand' },
+  { city: 'Tokyo', country: 'Japan', price: 250, imageAlias: 'japan' },
+  { city: 'Paris', country: 'France', price: 180, imageAlias: 'paris' },
+  { city: 'London', country: 'UK', price: 210, imageAlias: 'london' }
+]
 
 // Load all images from assets folder (Vite) and expose as URLs
-const images = import.meta.glob('../assets/*.{jpg,jpeg,png,webp,svg}', { eager: true, as: 'url' })
+const images = import.meta.glob('../assets/*.{jpg,jpeg,png,webp,svg}', { eager: true, query: '?url', import: 'default' })
 const imageKeys = Object.keys(images)
 
 function slugify(text = '') {
   return text.toString().toLowerCase().replace(/[^a-z0-9]/g, '')
 }
 
-function imageForCity(city) {
-  if (!city) return '/static/dest-placeholder.jpg'
-  const slug = slugify(city)
-  // find a matching asset filename that contains the city slug
-  const match = imageKeys.find(k => k.toLowerCase().includes(slug))
+function imageForDestination(destination) {
+  const keys = [destination.imageAlias, destination.city, destination.country].map(slugify)
+  const match = imageKeys.find(k => {
+    const normalizedKey = slugify(k)
+    return keys.some(key => normalizedKey.includes(key))
+  })
+
   return match ? images[match] : '/static/dest-placeholder.jpg'
 }
 
 </script>
 
-<style scoped>
-/* Home Page */
-.home-page{position:relative;width:100%;min-height:100vh;background:linear-gradient(0deg,#F8F9FA,#F8F9FA),#FFFFFF;padding-top:65px}
-
-/* Hero */
-.hero{position:relative;height:520px;margin:40px;border-radius:16px;display:flex;align-items:center;justify-content:center}
-.hero__content{width:768px;max-width:800px;text-align:center;color:#fff;z-index:1}
-.hero__title{font-family:'Plus Jakarta Sans';font-weight:800;font-size:60px;line-height:60px;letter-spacing:-1.5px;margin:0}
-.hero__subtitle{font-weight:500;font-size:20px;line-height:28px;margin-top:12px;color:rgba(255,255,255,0.9)}
-.hero__search{display:flex;gap:8px;margin-top:24px;background:#fff;border-radius:12px;padding:8px;align-items:center;justify-content:center}
-.search__field{display:flex;align-items:center;padding:0 12px;background:#E9E9E9;border-radius:8px;height:52px;flex:1}
-.search__icon{margin-right:8px}
-.search__button{padding:12px 32px;background:#005CBD;color:#fff;border-radius:8px;border:none}
-
-/* Why choose */
-.why-choose{display:flex;gap:24px;padding:48px 40px}
-.feature{background:#E9E9E9;border-radius:12px;padding:24px;text-align:center;flex:1}
-.feature .icon{width:48px;height:48px;border-radius:9999px;margin:0 auto 12px;background:rgba(83,146,249,0.2)}
-.feature h3{font-weight:700;margin:0 0 8px}
-.feature p{color:#424753;margin:0}
-
-/* Trending */
-.trending{padding:48px 40px}
-.trending__header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px}
-.trending__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.destination{border-radius:16px;overflow:hidden;position:relative;height:376px;background:#ddd}
-.destination__image{background-size:cover;background-position:center;height:100%}
-.destination__meta{position:absolute;left:16px;bottom:13px;background:rgba(255,255,255,0.9);padding:3.5px 12px;border-radius:9999px}
-.destination__name{font-weight:700}
-.destination__price{font-size:12px;color:#424753}
-
-/* Promo */
-.promo{margin:40px;border-radius:24px;padding:40px;background:#B61B4A;color:#fff;display:flex;align-items:center;justify-content:center}
-.promo__actions{margin-top:16px;display:flex;gap:16px}
-.btn--light{background:#fff;color:#B61B4A;padding:13.5px 32px;border-radius:12px}
-.btn--outline{background:transparent;border:2px solid #fff;color:#fff;padding:12px 32px;border-radius:12px}
-
-/* Newsletter */
-.newsletter{background:#E7E8F1;border-radius:24px;padding:64px 264px;margin:40px}
-.newsletter__inner{text-align:center}
-.newsletter__form{display:flex;gap:12px;margin-top:16px;justify-content:center}
-.newsletter__form input{padding:17px 24px;border:1px solid #6B7FC6;border-radius:12px;width:480px}
-.newsletter__form button{background:#005CBD;color:#fff;padding:16px 32px;border-radius:12px;border:none}
-
-/* Footer */
-.site-footer{position:relative;height:260px;background:#F8FAFC;border-top:1px solid #E2E8F0;margin-top:40px}
-.footer__inner{max-width:1280px;margin:48px auto;padding:0 24px;display:flex;justify-content:space-between;align-items:flex-start}
-.footer__col .brand{font-weight:700;font-size:20px;margin-bottom:8px}
-.footer__cols{display:flex;gap:32px}
-.footer__cols .col h4{font-weight:700;margin-bottom:8px}
-.footer__cols .col a{display:block;color:#64748B;margin-bottom:8px}
-
-/* Responsive */
-@media (max-width:1024px){
-  .trending__grid{grid-template-columns:repeat(2,1fr)}
-  .newsletter{padding:48px}
-}
-@media (max-width:640px){
-  .trending__grid{grid-template-columns:repeat(1,1fr)}
-  .hero__title{font-size:36px}
-  .hero__search{flex-direction:column;padding:12px}
-  .newsletter{padding:32px}
-  .footer__inner{flex-direction:column;gap:24px}
-}
-</style>
+<!-- Component-level styles removed to avoid overlap with Tailwind utilities.
+     Global layout and design tokens are provided in `src/assets/styles.css`. -->
