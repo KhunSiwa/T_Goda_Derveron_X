@@ -10,19 +10,23 @@
           <div class="absolute inset-0 bg-[rgba(255,255,255,0.002)] rounded-[12px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]" aria-hidden="true"></div>
           <div class="relative z-10 flex items-start gap-2 h-full bg-white rounded-[12px] p-2">
             <div class="w-[292.29px] h-[52px] bg-[#E9E9E9] border border-[#6B7FC6] rounded-[8px] flex items-center px-3">
-              <span class="w-[20.5px] h-[20.5px] bg-[#727784] rounded-sm mr-3 flex-shrink-0"></span>
+              <img :src="worldIcon" alt="" class="w-[24px] h-[24px] object-contain mr-3 flex-shrink-0" />
               <input v-model="destinationQuery" class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#6B7280]" placeholder="Where to next?" />
             </div>
 
             <div class="w-[292.29px] h-[52px] bg-[#E9E9E9] border border-[#6B7FC6] rounded-[8px] flex items-center px-3">
-              <span class="w-[18px] h-[20px] bg-[#727784] rounded-sm mr-3 flex-shrink-0"></span>
+              <img :src="dateIcon" alt="" class="w-[24px] h-[24px] object-contain mr-3 flex-shrink-0" />
               <input v-model="dateQuery" class="bg-transparent outline-none h-full w-full px-1 py-3 text-base text-[#191C22]" placeholder="Oct 12 - Oct 19, 2024" />
             </div>
 
             <button
-              class="w-[151.42px] h-[52px] bg-[#005CBD] rounded-[8px] text-white font-bold flex items-center justify-center"
+              class="w-[151.42px] h-[52px] bg-[#005CBD] rounded-[8px] text-white font-bold flex items-center justify-center gap-2"
               @click="goToSearch()"
             >
+              <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.5" />
+                <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
               Search
             </button>
           </div>
@@ -142,6 +146,8 @@ import promoBanner from '../assets/homepage/img-promobanner.png'
 import firstIcon from '../assets/homepage/first icon.png'
 import secondIcon from '../assets/homepage/second icon.png'
 import thirdIcon from '../assets/homepage/third icon.png'
+import worldIcon from '../assets/homepage/world.jpeg'
+import dateIcon from '../assets/homepage/date1.jpeg'
 
 const router = useRouter()
 const destinationQuery = ref(store.searchQuery)
